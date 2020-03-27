@@ -1,4 +1,4 @@
-﻿<html><head>
+<html><head>
       <title>Leaflet Maps</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@
 		 function plotdraggablepoint () {
 		 	 var locationfield = document.getElementById("locationfield");
 			 var latitude, longitude;
-			 if (document.getElementById("locationfield2").value != undefined && document.getElementById("locationfield3").value != undefined) {
+			 if (document.getElementById("locationfield2").value != 0 && document.getElementById("locationfield3").value != 0) {
 			 	latitude = document.getElementById("locationfield2").value;
 				longitude = document.getElementById("locationfield3").value;
 			 }
@@ -60,12 +60,17 @@
 				latitude = 47.5301;
 				longitude = -122.0326;
 			 }
+			 mymap.setView([latitude, longitude], 13);
 			 bindstring = locationfield.value;
 			 var marker = L.marker([latitude, longitude], {
 				riseOnHover:true,
 				draggable:true
 			 }).addTo(mymap);
 			 marker.bindTooltip(bindstring, {className: 'tooltipclass'}).openTooltip();
+			 var circle = L.circle([latitude, longitude], 100, {
+				riseOnHover:true,
+				draggable:true
+			 }).addTo(mymap);			 
 		 }
 		 var circle = L.circle([47.6163, -122.0356], 600, {
 			riseOnHover:true,
