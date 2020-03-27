@@ -41,7 +41,7 @@
          <input id="locationfield" type="text" class="form__input" placeholder="New Location Name..." required="">
 		 <input id="locationfield2" type="text" class="form__input" placeholder="New Latitude..." required="">
 		 <input id="locationfield3" type="text" class="form__input" placeholder="New Longitude..." required="">
-		 <button style="float:right;" class="submitButton" onclick="plotdraggablepoint(47.5301, -122.0326)">Submit</button>
+		 <button style="float:right;" class="submitButton" onclick="plotdraggablepoint()">Submit</button>
       </div>
       <script>
          var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
@@ -49,8 +49,17 @@
 		 var mapClickState = 0;
 		 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
 		 
-		 function plotdraggablepoint (latitude, longitude) {
+		 function plotdraggablepoint () {
 		 	 var locationfield = document.getElementById("locationfield");
+			 var latitude, longitude;
+			 if (document.getElementById("locationfield2").value != undefined && document.getElementById("locationfield3").value != undefined) {
+			 	latitude = document.getElementById("locationfield2").value;
+				longitude = document.getElementById("locationfield3").value;
+			 }
+			 else {
+				latitude = 47.5301;
+				longitude = -122.0326;
+			 }
 			 bindstring = locationfield.value;
 			 var marker = L.marker([latitude, longitude], {
 				riseOnHover:true,
