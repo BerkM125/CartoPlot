@@ -10,10 +10,10 @@
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="JBStyling.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/40/4/common.js"></script>
   <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/40/4/util.js"></script>
+  <link rel="stylesheet" href="JBStyling.css">
 </head>
 
 <body>
@@ -25,76 +25,30 @@
         <!--add a link here-->
       </ul>
     </nav>
-    <label for="slider" class="slidertoggler">&#9776</label>
+    <label for="slider" class="slidertoggler">☰</label>
   </header>
 
   <input type="checkbox" id="slider" name="" value="" />
   <div class="slidercontainer">
     <nav class="sidebar">
-      <p style="font-size: 20px; font-family:'Muli', sans-serif; margin-top:10px; margin-bottom:10px;">Add a new point on the map</p>
-      <input id="locationfield" type="text" class="form__input" placeholder="New Location Name..." required="">
-      <input id="locationfield2" type="text" class="form__input" placeholder="New Latitude..." required="">
-      <input id="locationfield3" type="text" class="form__input" placeholder="New Longitude..." required="">
-      <button class="submitButton" onclick="plotdraggablepoint()">Submit</button>
+      <div class="sidebarSection">
+        <p>Add a new point on the map</p>
+        <input id="locationfield" type="text" class="form__input" placeholder="New Location Name..." required="">
+        <input id="locationfield2" type="text" class="form__input" placeholder="New Latitude..." required="">
+        <input id="locationfield3" type="text" class="form__input" placeholder="New Longitude..." required="">
+        <button class="submitButton" onclick="plotdraggablepoint()">Submit</button>
+      </div>
+      <div class="sidebarSection">
+        <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
+        <button class="submitButton" onclick="startRuler()">Enable Ruler</button>
+        <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);">Enabled!</p>
+      </div>
     </nav>
   </div>
 
   <div id="mapid" style="width: 150%; height: 100%; position: relative; outline: currentcolor none medium;"></div> <!-- Map itself -->
 
-  <script>
-    var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
-    var bindstring = "Issaquah";
-    var mapClickState = 0;
-    var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
-
-    function plotdraggablepoint() {
-      var locationfield = document.getElementById("locationfield");
-      var latitude, longitude;
-      if (document.getElementById("locationfield2").value != 0 && document.getElementById("locationfield3").value != 0) {
-        latitude = document.getElementById("locationfield2").value;
-        longitude = document.getElementById("locationfield3").value;
-      } else {
-        latitude = 47.5301;
-        longitude = -122.0326;
-      }
-      mymap.setView([latitude, longitude], 13);
-      bindstring = locationfield.value;
-      var marker = L.marker([latitude, longitude], {
-        riseOnHover: true,
-        draggable: true
-      }).addTo(mymap);
-      marker.bindTooltip(bindstring, {
-        className: 'tooltipclass'
-      }).openTooltip();
-      var circle = L.circle([latitude, longitude], 100, {
-        riseOnHover: true
-      }).addTo(mymap);
-    }
-    var circle = L.circle([47.6163, -122.0356], 600, {
-      riseOnHover: true
-    }).addTo(mymap);
-    circle.on({
-      mousedown: function() {
-        if (mapClickState === 0) {
-          mymap.on('mousemove', function(e) {
-            circle.setLatLng(e.latlng);
-          });
-          mapClickState = 1;
-        } else if (mapClickState === 1) {
-          mapClickState = 0;
-          mymap.removeEventListener('mousemove');
-        }
-      }
-    });
-
-    // Close sidebar when ESC pressed
-    document.onkeydown = function(event) {
-      event = event || window.event;
-      if (event.keyCode == 27) {
-        document.getElementById("slider").checked = false;
-      }
-    };
-  </script>
+  <script src="JBStyling.js"></script> <!-- Leave this at the end because otherwise the map won't get initialized -->
 </body>
 
 </html>

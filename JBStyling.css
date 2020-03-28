@@ -143,3 +143,15 @@ header {
 #slider {
   display: none;
 }
+
+p {
+  font-size: 20px;
+  font-family:'Muli', sans-serif;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.sidebarSection {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
