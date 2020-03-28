@@ -47,6 +47,7 @@ body {
   text-decoration: none;
   text-shadow: 0px -1px 0px #2b665e;
 }
+
 .submitButton:hover {
   background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
   background-color: #6c7c7c;
@@ -61,14 +62,14 @@ body {
   font-size: 15px;
   border: 2px solid cyan
 }
+
 .leaflet-tooltip-left.tooltipclass::before {
   border-left-color: cyan;
 }
+
 .leaflet-tooltip-right.tooltipclass::before {
   border-right-color: cyan;
 }
-
-
 
 header {
   height: 8%;
@@ -77,23 +78,24 @@ header {
   align-items: center;
   padding: 30px 10%;
 }
+
 .nav_links li {
   display: inline-block;
   padding: 0px 20px;
 }
+
 .nav_links a {
   font-size: 20px;
   color: white;
   text-decoration: none;
 }
+
 .logo {
-  order:10;
+  order: 10;
   display: block;
   max-height: 60px;
   border-radius: 3px;
 }
-
-
 
 .slidertoggler {
   text-decoration: none;
@@ -105,11 +107,13 @@ header {
   transition: 0.5s;
   opacity: 0.8;
 }
-.slidertoggler:hover{
-   transition: 0.1s;
-   font-size: 11em;
-   opacity: 1;
+
+.slidertoggler:hover {
+  transition: 0.1s;
+  font-size: 11em;
+  opacity: 1;
 }
+
 .sidebar {
   position: absolute;
   top: 0px;
@@ -121,17 +125,21 @@ header {
   background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
   transition: 0.5s;
 }
+
 .sidebar ul {
   list-style: none;
   margin: 0;
-  padding: 0; 
+  padding: 0;
 }
-#slider:checked + .slidercontainer .sidebar {
+
+#slider:checked+.slidercontainer .sidebar {
   right: 0px;
 }
-#slider:checked + .slidercontainer .toggle {
+
+#slider:checked+.slidercontainer .toggle {
   right: 400px;
 }
+
 #slider {
-  display: none; 
+  display: none;
 }
