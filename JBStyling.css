@@ -71,7 +71,7 @@ body {
 
 
 header {
-  height: 10%;
+  height: 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,7 +87,7 @@ header {
   text-decoration: none;
 }
 .logo {
-  order: 10;
+  order:10;
   display: block;
   max-height: 60px;
   border-radius: 3px;
@@ -102,7 +102,13 @@ header {
   position: fixed;
   left: 20px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.4s;
+  opacity: 0.8;
+}
+.slidertoggler:hover{
+   transition: 0.1s;
+   font-size: 11em;
+   opacity: 1;
 }
 .sidebar {
   position: absolute;
@@ -110,7 +116,7 @@ header {
   bottom: 0px;
   right: -400px;
   z-index: 9999;
-  width: 400px;
+  width: 350px;
   padding: 1.5em;
   background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
   transition: 0.5s;
