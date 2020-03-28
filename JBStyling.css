@@ -102,7 +102,7 @@ header {
   position: fixed;
   left: 20px;
   cursor: pointer;
-  transition: 0.4s;
+  transition: 0.5s;
   opacity: 0.8;
 }
 .slidertoggler:hover{
