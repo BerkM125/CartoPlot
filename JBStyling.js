@@ -74,6 +74,9 @@ function startRuler() {
                     }
                     circle.setLatLng(e.latlng);
                 });
+                circle.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString() + " Meters", {
+                    className: 'tooltipclass'
+                }).openTooltip()
                 mapClickState = 1;
             } else if (mapClickState === 1) {
                 mapClickState = 0;
@@ -109,6 +112,9 @@ function startRuler() {
                         linestate = 0;
                     }
                     circle2.setLatLng(e.latlng);
+                    circle2.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString() + " Meters", {
+                        className: 'tooltipclass'
+                    }).openTooltip()
                 });
                 mapClickState = 1;
             } else if (mapClickState === 1) {
