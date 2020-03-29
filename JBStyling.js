@@ -1,6 +1,7 @@
 var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var bindstring = "Issaquah";
 var mapClickState = 0;
+var linestate, linestate2;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
 
 function plotdraggablepoint() {
@@ -33,7 +34,7 @@ function startRuler() {
     var circle2 = L.circle([47.5301, -122.0326], 600, {
         riseOnHover: true
     }).addTo(mymap);
-    var line, line2, linestate, linestate2;
+    var line, line2;
     var points = [circle.getLatLng(), circle2.getLatLng()];
     mymap.setView(circle.getLatLng(), 12);
     line = L.polyline(points, {
