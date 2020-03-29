@@ -123,7 +123,7 @@ function startRuler() {
                 }).openTooltip()
             }
         }
-    });
+    }); */
 
   document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
