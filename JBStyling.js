@@ -17,14 +17,11 @@ function plotdraggablepoint() {
   bindstring = locationfield.value;
   var marker = L.marker([latitude, longitude], {
     riseOnHover: true,
-    draggable: false
+    draggable: true
   }).addTo(mymap);
   marker.bindTooltip(bindstring, {
     className: 'tooltipclass'
   }).openTooltip();
-  var circle = L.circle([latitude, longitude], 100, {
-    riseOnHover: true
-  }).addTo(mymap);
 }
 
 function startRuler() {
