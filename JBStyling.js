@@ -45,6 +45,8 @@ function startRuler() {
   let point2;
   let line;
   let point2State = 0;
+  let distanceString;
+  let meters;
   point2 = L.marker([0,0], {
     draggable: false,
     riseOnHover: true
@@ -63,12 +65,14 @@ function startRuler() {
 
       mymap.removeLayer(line);
       points = [point1.getLatLng(), point2.getLatLng()];
+      meters = (Math.round(L.GeometryUtil.length([point1.getLatLng(), point2.getLatLng()]) * 100) / 100);
+      distanceString = meters.toString() + " Meters<br>" + (Math.round((meters * 0.001)*100)/100).toString() + " Kilometers<br>" + (Math.round((meters * 0.0006)*100)/100).toString() + " Miles<br>";
       line = L.polyline(points, {
         color: 'red',
         weight: 3,
         opacity: 0.5,
         smoothFactor: 1
-      }).addTo(mymap).bindPopup((Math.round(L.GeometryUtil.length([point1.getLatLng(), point2.getLatLng()]) * 100) / 100).toString() + " Meters", {
+      }).addTo(mymap).bindPopup(distanceString.toString() + " Meters", {
         className: 'popUp',
         closeOnClick: false,
         autoClose: false
