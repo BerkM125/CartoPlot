@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2013, Makina Corpus
+
+All rights reserved.
+*/
 // Packaging/modules magic dance.
 (function (factory) {
     var L;
