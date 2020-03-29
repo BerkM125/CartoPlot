@@ -35,7 +35,7 @@ function startRuler() {
     }).addTo(mymap);
     var line, line2, linestate;
     var points = [circle.getLatLng(), circle2.getLatLng()];
-    mymap.setView(circle.getLatLng(), 13);
+    mymap.setView(circle.getLatLng(), 12);
     line = L.polyline(points, {
         color: 'red',
         weight: 3,
