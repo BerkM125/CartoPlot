@@ -2,7 +2,7 @@ var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var bindstring = "Issaquah";
 var mapClickState = 0;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
-
+var mapClickState = 0;
 function plotdraggablepoint() {
   var locationfield = document.getElementById("locationfield");
   var latitude, longitude;
@@ -27,13 +27,83 @@ function plotdraggablepoint() {
   }).addTo(mymap);
 }
 
-function startRuler() {
-  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
+		 function startRuler () {
+			document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
-  // Add ruler code here | dont touch color changes above and below
-
-  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
-}
+			 var circle = L.circle([47.6163, -122.0356], 600, {
+				riseOnHover:true
+			 }).addTo(mymap);
+			 var circle2 = L.circle([47.5301, -122.0326], 600, {
+				riseOnHover:true
+			 }).addTo(mymap);
+			 var line, line2, linestate;
+			 var points = [circle.getLatLng(), circle2.getLatLng()];
+			 mymap.setView(circle.getLatLng(), 13);
+			 line = L.polyline(points, {
+				color: 'red',
+				weight: 3,
+				opacity: 0,
+				smoothFactor: 1
+			 }).addTo(mymap);
+			 line2 = L.polyline(points, {
+				color: 'red',
+				weight: 3,
+				opacity: 0,
+				smoothFactor: 1
+			 }).addTo(mymap);		 
+			 circle.on({
+				mousedown: function () {
+				  if(mapClickState === 0) {
+					  mymap.on('mousemove', function (e) {
+						circle.setLatLng(e.latlng);
+					  });
+					  mapClickState = 1;
+				  }
+				  else if(mapClickState === 1) {
+					  mapClickState = 0;
+					  mymap.removeEventListener('mousemove');
+				  }			
+				}
+			 });
+			 circle2.on({
+				mousedown: function () {
+				  if(mapClickState === 0) {
+					  mymap.on('mousemove', function (e) {
+						 points = [circle.getLatLng(), circle2.getLatLng()];
+						 if(linestate === 0) {
+							 mymap.removeLayer(line2);
+							 line = L.polyline(points, {
+								color: 'red',
+								weight: 3,
+								opacity: 0.5,
+								smoothFactor: 1
+							 }).addTo(mymap);
+							 linestate += 1;
+						 }
+						 else {
+							 mymap.removeLayer(line);
+							 line2 = L.polyline(points, {
+								color: 'red',
+								weight: 3,
+								opacity: 0.5,
+								smoothFactor: 1
+							 }).addTo(mymap);
+							 linestate = 0;
+						 }
+						 circle2.setLatLng(e.latlng);
+					  });
+					  mapClickState = 1;
+				  }
+				  else if(mapClickState === 1) {
+					  mapClickState = 0;			  
+					  mymap.removeEventListener('mousemove');
+					  circle2.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString()+" Meters", {className: 'tooltipclass'}).openTooltip()
+				  }			
+				}
+			 });
+			 
+			 document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
+		 }	
 
 var circle = L.circle([47.6163, -122.0356], 600, {
   riseOnHover: true
