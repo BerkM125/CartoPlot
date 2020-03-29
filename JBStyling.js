@@ -72,7 +72,7 @@ function startRuler() {
         weight: 3,
         opacity: 0.5,
         smoothFactor: 1
-      }).addTo(mymap).bindPopup(distanceString.toString() + " Meters", {
+      }).addTo(mymap).bindPopup(distanceString, {
         className: 'popUp',
         closeOnClick: false,
         autoClose: false
