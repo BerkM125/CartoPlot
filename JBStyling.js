@@ -39,13 +39,13 @@ function startRuler() {
     line = L.polyline(points, {
         color: 'red',
         weight: 3,
-        opacity: 0,
+        opacity: 0.5,
         smoothFactor: 1
     }).addTo(mymap);
     line2 = L.polyline(points, {
         color: 'red',
         weight: 3,
-        opacity: 0,
+        opacity: 0.5,
         smoothFactor: 1
     }).addTo(mymap);
     circle.on({
