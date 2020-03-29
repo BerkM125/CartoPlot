@@ -25,6 +25,16 @@ function plotdraggablepoint() {
   }).openTooltip();
 }
 
+function plotOnClick() {
+  mymap.on('click', function(event) {
+    marker = L.marker(event.latlng, {
+      draggable: true,
+      riseOnHover: true
+    }).addTo(mymap);
+    mymap.removeEventListener("click");
+  });
+}
+
 function startRuler() {
   document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
@@ -81,7 +91,6 @@ function startRuler() {
 function removeAllLayers() {
   mymap.eachLayer(function(layer) {
     if (layer._url != "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") {
-      console.log(layer)
       mymap.removeLayer(layer);
     }
   });
