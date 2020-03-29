@@ -75,6 +75,10 @@ body {
   border-right-color: cyan;
 }
 
+.popUp {
+  font-size: 30px;
+}
+
 header {
   height: 8%;
   display: flex;

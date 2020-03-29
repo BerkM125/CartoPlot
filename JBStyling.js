@@ -6,13 +6,8 @@ var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo
 function plotdraggablepoint() {
   var locationfield = document.getElementById("locationfield");
   var latitude, longitude;
-  if (document.getElementById("locationfield2").value != 0 && document.getElementById("locationfield3").value != 0) {
-    latitude = document.getElementById("locationfield2").value;
-    longitude = document.getElementById("locationfield3").value;
-  } else {
-    latitude = 47.5301;
-    longitude = -122.0326;
-  }
+  latitude = document.getElementById("locationfield2").value;
+  longitude = document.getElementById("locationfield3").value;
   mymap.setView([latitude, longitude], 13);
   bindstring = locationfield.value;
   var marker = L.marker([latitude, longitude], {
@@ -28,7 +23,6 @@ function plotdraggablepoint() {
 }
 
 function startRuler() {
-  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
   var circle = L.circle([47.6163, -122.0356], 600, {
     riseOnHover: true
@@ -101,7 +95,65 @@ function startRuler() {
     }
   });
 
-  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
+  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
+
+  let point1;
+  let point2;
+  let line;
+
+  mymap.on('click', function(event) {
+    if (point1 == undefined) {
+      point1 = L.marker(event.latlng, {
+        draggable: false,
+        riseOnHover: true
+      }).addTo(mymap);
+    } else {
+      point2 = L.marker(event.latlng, {
+        draggable: false,
+        riseOnHover: true
+      }).addTo(mymap);
+
+      mymap.removeLayer(line);
+      points = [point1.getLatLng(), point2.getLatLng()];
+      line = L.polyline(points, {
+        color: 'red',
+        weight: 3,
+        opacity: 0.5,
+        smoothFactor: 1
+      }).addTo(mymap).bindPopup((Math.round(L.GeometryUtil.length([point1.getLatLng(), point2.getLatLng()]) * 100) / 100).toString() + " Meters", {
+        className: 'popUp',
+          closeOnClick: false,
+        autoClose: false
+      }).openPopup();
+
+      mymap.removeEventListener("click");
+      mymap.removeEventListener("mousemove");
+      document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
+    }
+  });
+
+  mymap.on("mousemove", function(event) {
+    if (line != undefined) {
+      mymap.removeLayer(line);
+    }
+    if (point1 != undefined) {
+      points = [point1.getLatLng(), event.latlng];
+      line = L.polyline(points, {
+        color: 'red',
+        opacity: 0.5,
+        smoothFactor: 1
+      }).addTo(mymap);
+    }
+  });
+}
+
+function removeAllLayers() {
+  mymap.eachLayer(function(layer) {
+    if (layer._url != "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") {
+      console.log(layer)
+      mymap.removeLayer(layer);
+    }
+  });
 }
 
 // Close sidebar when ESC pressed
@@ -114,7 +166,6 @@ document.onkeydown = function(event) {
 
 function sidebarUpdate() {
   slider = document.getElementById("slider").checked;
-  console.log(slider);
   if (slider) {
     document.getElementById("togglerLabel").innerHTML = "✖ Tools";
   } else {
