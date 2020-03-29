@@ -31,6 +31,9 @@ function plotOnClick() {
       draggable: true,
       riseOnHover: true
     }).addTo(mymap);
+    marker.bindTooltip(bindstring, {
+    	className: 'tooltipclass'
+    }).openTooltip();
     mymap.removeEventListener("click");
   });
 }
