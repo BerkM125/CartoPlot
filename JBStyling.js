@@ -41,7 +41,11 @@ function startRuler() {
   let point1;
   let point2;
   let line;
-
+  let point2State = 0;
+  point2 = L.marker([0,0], {
+    draggable: false,
+    riseOnHover: true
+  });
   mymap.on('click', function(event) {
     if (point1 == undefined) {
       point1 = L.marker(event.latlng, {
@@ -72,20 +76,31 @@ function startRuler() {
       document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
     }
   });
-
-  mymap.on("mousemove", function(event) {
-    if (line != undefined) {
-      mymap.removeLayer(line);
-    }
-    if (point1 != undefined) {
-      points = [point1.getLatLng(), event.latlng];
-      line = L.polyline(points, {
-        color: 'red',
-        opacity: 0.5,
-        smoothFactor: 1
-      }).addTo(mymap);
-    }
-  });
+	mymap.on("mousemove", function(event) {
+		if (line != undefined) {
+		  mymap.removeLayer(line);
+		}
+		if (point1 != undefined) {
+		  points = [point1.getLatLng(), event.latlng];
+		  if(point2State === 0){
+			  mymap.removeLayer(point2);
+			  point2 = L.marker(event.latlng, {
+				draggable: false,
+				riseOnHover: true
+			  }).addTo(mymap);
+			  point2State+=1;
+		  }
+		  else {
+			  
+			  point2State = 0;
+		  }
+		  line = L.polyline(points, {
+			color: 'red',
+			opacity: 0.5,
+			smoothFactor: 1
+		  }).addTo(mymap);
+		}
+	});
 }
 
 function removeAllLayers() {
