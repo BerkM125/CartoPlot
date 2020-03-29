@@ -105,23 +105,6 @@ function startRuler() {
   document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
 }
 
-var circle = L.circle([47.6163, -122.0356], 600, {
-  riseOnHover: true
-}).addTo(mymap);
-circle.on({
-  mousedown: function() {
-    if (mapClickState === 0) {
-      mymap.on('mousemove', function(e) {
-        circle.setLatLng(e.latlng);
-      });
-      mapClickState = 1;
-    } else if (mapClickState === 1) {
-      mapClickState = 0;
-      mymap.removeEventListener('mousemove');
-    }
-  }
-});
-
 // Close sidebar when ESC pressed
 document.onkeydown = function(event) {
   event = event || window.event;
