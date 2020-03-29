@@ -54,6 +54,7 @@ function startRuler() {
                 mymap.on('mousemove', function(e) {
                     points = [circle.getLatLng(), circle2.getLatLng()];
                     if (linestate2 === 0) {
+                        mymap.removeLayer(line);
                         mymap.removeLayer(line2);
                         line = L.polyline(points, {
                             color: 'red',
@@ -90,6 +91,7 @@ function startRuler() {
                 mymap.on('mousemove', function(e) {
                     points = [circle.getLatLng(), circle2.getLatLng()];
                     if (linestate === 0) {
+                        mymap.removeLayer(line);
                         mymap.removeLayer(line2);
                         line = L.polyline(points, {
                             color: 'red',
