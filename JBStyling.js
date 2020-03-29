@@ -48,19 +48,42 @@ function startRuler() {
     opacity: 0,
     smoothFactor: 1
   }).addTo(mymap);
-  circle.on({
-    mousedown: function() {
-      if (mapClickState === 0) {
-        mymap.on('mousemove', function(e) {
-          circle.setLatLng(e.latlng);
-        });
-        mapClickState = 1;
-      } else if (mapClickState === 1) {
-        mapClickState = 0;
-        mymap.removeEventListener('mousemove');
-      }
-    }
-  });
+circle.on({
+mousedown: function () {
+  if(mapClickState === 0) {
+	  mymap.on('mousemove', function (e) {
+		 points = [circle.getLatLng(), circle2.getLatLng()];
+		 if(linestate === 0) {
+			 mymap.removeLayer(line2);
+			 line = L.polyline(points, {
+				color: 'red',
+				weight: 3,
+				opacity: 0.5,
+				smoothFactor: 1
+			 }).addTo(mymap);
+			 linestate += 1;
+		 }
+		 else {
+			 mymap.removeLayer(line);
+			 line2 = L.polyline(points, {
+				color: 'red',
+				weight: 3,
+				opacity: 0.5,
+				smoothFactor: 1
+			 }).addTo(mymap);
+			 linestate = 0;
+		 }
+		circle.setLatLng(e.latlng);
+	  });
+	  mapClickState = 1;
+  }
+  else if(mapClickState === 1) {
+	  mapClickState = 0;
+	  mymap.removeEventListener('mousemove');
+	  circle2.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString()+" Meters", {className: 'tooltipclass'}).openTooltip()
+  }			
+}
+});
   circle2.on({
     mousedown: function() {
       if (mapClickState === 0) {
