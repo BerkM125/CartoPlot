@@ -80,7 +80,7 @@ mousedown: function () {
   else if(mapClickState === 1) {
 	  mapClickState = 0;
 	  mymap.removeEventListener('mousemove');
-	  circle2.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString()+" Meters", {className: 'tooltipclass'}).openTooltip()
+	  circle.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString()+" Meters", {className: 'tooltipclass'}).openTooltip()
   }			
 }
 });
