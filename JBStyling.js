@@ -2,7 +2,6 @@ var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var bindstring = "Issaquah";
 var mapClickState = 0;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
-var mapClickState = 0;
 
 function plotdraggablepoint() {
   var locationfield = document.getElementById("locationfield");
