@@ -33,7 +33,7 @@ function startRuler() {
     var circle2 = L.circle([47.5301, -122.0326], 600, {
         riseOnHover: true
     }).addTo(mymap);
-    var line, line2, linestate;
+    var line, line2, linestate, linestate2;
     var points = [circle.getLatLng(), circle2.getLatLng()];
     mymap.setView(circle.getLatLng(), 12);
     line = L.polyline(points, {
@@ -53,7 +53,7 @@ function startRuler() {
             if (mapClickState === 0) {
                 mymap.on('mousemove', function(e) {
                     points = [circle.getLatLng(), circle2.getLatLng()];
-                    if (linestate === 0) {
+                    if (linestate2 === 0) {
                         mymap.removeLayer(line2);
                         line = L.polyline(points, {
                             color: 'red',
@@ -61,7 +61,7 @@ function startRuler() {
                             opacity: 0.5,
                             smoothFactor: 1
                         }).addTo(mymap);
-                        linestate += 1;
+                        linestate2 += 1;
                     } else {
                         mymap.removeLayer(line);
                         line2 = L.polyline(points, {
@@ -70,13 +70,10 @@ function startRuler() {
                             opacity: 0.5,
                             smoothFactor: 1
                         }).addTo(mymap);
-                        linestate = 0;
+                        linestate2 = 0;
                     }
                     circle.setLatLng(e.latlng);
                 });
-                circle.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString() + " Meters", {
-                    className: 'tooltipclass'
-                }).openTooltip()
                 mapClickState = 1;
             } else if (mapClickState === 1) {
                 mapClickState = 0;
@@ -112,9 +109,6 @@ function startRuler() {
                         linestate = 0;
                     }
                     circle2.setLatLng(e.latlng);
-                    circle2.bindTooltip(L.GeometryUtil.length([circle.getLatLng(), circle2.getLatLng()]).toString() + " Meters", {
-                        className: 'tooltipclass'
-                    }).openTooltip()
                 });
                 mapClickState = 1;
             } else if (mapClickState === 1) {
