@@ -25,8 +25,9 @@ function plotdraggablepoint() {
     }).openTooltip();
 }
 
-/*function startRuler() {
-    document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
+function startRuler() {
+    //Circle pick-and-drop ruler
+    /*document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
     var circle = L.circle([47.6163, -122.0356], 600, {
         riseOnHover: true
@@ -124,8 +125,8 @@ function plotdraggablepoint() {
         }
     });
 
-    document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
-}*/
+    document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";*/
+}
 
 // Close sidebar when ESC pressed
 document.onkeydown = function(event) {
