@@ -53,10 +53,10 @@ function startRuler() {
             if (mapClickState === 0) {
                 mymap.on('mousemove', function(e) {
                     points = [circle.getLatLng(), circle2.getLatLng()];
-                    points[0].lat-=5;
-                    points[0].lon-=5;
-                    points[1].lat+=5;
-                    points[1].lat+=5;
+                    points[0].lat-=0.001;
+                    points[0].lon-=0.001;
+                    points[1].lat+=0.001;
+                    points[1].lat+=0.001;
                     if (linestate === 0) {
                         mymap.removeLayer(line2);
                         line = L.polyline(points, {
@@ -96,10 +96,10 @@ function startRuler() {
             if (mapClickState === 0) {
                 mymap.on('mousemove', function(e) {
                     points = [circle.getLatLng(), circle2.getLatLng()];
-                    points[0].lat-=5;
-                    points[0].lon-=5;
-                    points[1].lat+=5;
-                    points[1].lat+=5;
+                    points[0].lat-=0.001;
+                    points[0].lon-=0.001;
+                    points[1].lat+=0.001;
+                    points[1].lat+=0.001;
                     if (linestate === 0) {
                         mymap.removeLayer(line2);
                         line = L.polyline(points, {
