@@ -31,6 +31,10 @@ body {
   transition: all 0.3s;
 }
 
+.form__input:focus {
+  width: 100%;
+}
+
 .submitButton {
   box-shadow: inset 0px 1px 3px 0px #91b8b3;
   background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
@@ -104,7 +108,7 @@ header {
   position: fixed;
   left: 20px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 1s;
   opacity: 0.8;
 }
 
@@ -146,12 +150,12 @@ header {
 
 p {
   font-size: 20px;
-  font-family:'Muli', sans-serif;
-  margin-top:10px;
-  margin-bottom:10px;
+  font-family: 'Muli', sans-serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebarSection {
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
 }

@@ -17,7 +17,7 @@ function plotdraggablepoint() {
   bindstring = locationfield.value;
   var marker = L.marker([latitude, longitude], {
     riseOnHover: true,
-    draggable: true
+    draggable: false
   }).addTo(mymap);
   marker.bindTooltip(bindstring, {
     className: 'tooltipclass'
@@ -28,19 +28,11 @@ function plotdraggablepoint() {
 }
 
 function startRuler() {
-  // firstPlotted = false;
-  // secondPlotted = false;
-  //
-  // function onMapClick(event) {
-  //   let marker = L.marker(event.latlng, {
-  //     draggable: true,
-  //     title: "Ruler point",
-  //     alt: "Ruler point",
-  //     riseOnHover: true
-  //   });
-  // }
+  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
 
-  // Add ruler source code here
+  // Add ruler code here | dont touch color changes above and below
+
+  document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
 }
 
 var circle = L.circle([47.6163, -122.0356], 600, {
@@ -67,3 +59,14 @@ document.onkeydown = function(event) {
     document.getElementById("slider").checked = false;
   }
 };
+
+function sidebarUpdate() {
+  slider = document.getElementById("slider").checked;
+  console.log(slider);
+  if (slider) {
+    document.getElementById("togglerLabel").innerHTML = "✖ Tools";
+  }
+  else {
+    document.getElementById("togglerLabel").innerHTML = "☰ Tools";
+  }
+}
