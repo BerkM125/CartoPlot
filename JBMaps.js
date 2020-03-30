@@ -138,6 +138,12 @@ function popupLocationSearch() {
 	mymap.setView(locationArray[locationIn], 15);
 }
 
+function locationSearch() {
+	var locationkey = document.getElementById("locationfield4").value;
+	var locationIn = locationht.getItem(locationkey);
+	mymap.setView(locationArray[locationIn], 15);
+}
+
 function startFreeForm() {
 	let point1;
 	let point2;
