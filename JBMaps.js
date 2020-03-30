@@ -98,7 +98,7 @@ function plotdraggablepoint() {
   latitude = document.getElementById("locationfield2").value;
   longitude = document.getElementById("locationfield3").value;
 
-  mymap.setView([latitude, longitude], 13);
+  mymap.setView([latitude, longitude], 15);
   var marker = L.marker([latitude, longitude], {
     riseOnHover: true,
     draggable: true
@@ -135,8 +135,7 @@ function plotOnClick() {
 function popupLocationSearch() {
 	var locationkey = prompt("Search location: ");
 	var locationIn = locationht.getItem(locationkey);
-	mymap.setView(locationArray[locationIn], 13);
-	alert(locationArray[locationIn].lat + ", " + locationArray[locationIn].lng);
+	mymap.setView(locationArray[locationIn], 15);
 }
 
 function startFreeForm() {
