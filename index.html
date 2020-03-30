@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
   <script type="text/javascript" src="leaflet.geometryutil.js"></script>
   <link rel="stylesheet" href="JBStyling.css">
-</head>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" / </head>
 
 <body>
   <header>
@@ -40,11 +40,12 @@
         <button class="submitButton plotButtons" onclick="plotOnClick()">Plot On Click</button>
       </div>
       <div class="sidebarSection">
-        <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
-		<label class="switch">
-		  <input id="switchinput" onclick="freeFormState += 1;" type="checkbox">
-		  <span class="slider round"></span>
-		</label>
+        <p>Ruler | Press Activate then click on both locations you want to measure the distance between</p>
+        <label class="switch">
+          <input id="switchinput" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        <p style="display: inline; padding: 10px;">Enable Freeform Ruler</p>
         <button class="submitButton" onclick="startRuler()" id="rulerEnabler">Activate Ruler</button>
         <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);" id="onRulerEnabled">Activated!</p>
       </div>
@@ -54,8 +55,8 @@
       </div>
       <div class="sidebarSection">
         <p>Save or Load map to edit</p>
-        <button class="submitButton" onclick="saveMap()" style="margin-right: 7px;">Save</button>
-        <button class="submitButton" onclick="loadMap()">Load</button>
+        <button class="submitButton" onclick="saveMap()" style="display: inline; margin-right: 5px;">Save</button>
+        <button class="submitButton" onclick="loadMap()" style="display: inline;">Load</button>
       </div>
     </nav>
   </div>

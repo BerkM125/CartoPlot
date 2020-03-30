@@ -2,7 +2,6 @@ var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var mapClickState = 0;
 var linestate, linestate2;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
-var freeFormState = 1;
 
 function plotdraggablepoint() {
     var locationfield = document.getElementById("locationfield").value;
@@ -44,6 +43,9 @@ function plotOnClick() {
 }
 
 function startFreeForm() {
+    document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
+    document.getElementById("rulerEnabler").style.backgroundPosition = "left";
+
     let point1;
     let point2;
     let points;
@@ -90,6 +92,8 @@ function startFreeForm() {
             }).openPopup();
             mymap.removeEventListener('mousemove');
             mymap.removeEventListener('mousedown');
+            document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
+            document.getElementById("rulerEnabler").style.backgroundPosition = "right";
             return;
         }
     });
@@ -165,20 +169,12 @@ function linearRuler() {
 }
 
 function startRuler() {
-    /*switch(rulerDrawingMode) {
-    	case 0:
-    		linearRuler();
-    		break;
-    	case 1:
-    		startFreeForm();
-    		break;
-    	default:
-    		break;
-    }*/
-    if (freeFormState % 2 === 0) {
-        startFreeForm();
-    } else {
-        linearRuler();
+    freeForm = document.getElementById("switchinput").checked;
+    if (freeForm) {
+      startFreeForm();
+    }
+    else {
+      linearRuler();
     }
 }
 
@@ -208,39 +204,39 @@ function sidebarUpdate() {
     }
 }
 
-// var geojson = [];
-//
-// function saveMap() {
-//   // getCircularReplacer is taken from https://docs.w3cub.com/javascript/errors/cyclic_object_value/
-//   const getCircularReplacer = () => {
-//     const seen = new WeakSet();
-//     return (key, value) => {
-//       if (typeof value === "object" && value !== null) {
-//         if (seen.has(value)) {
-//           return;
-//         }
-//         seen.add(value);
-//       }
-//       return value;
-//     };
-//   };
-//
-//   mymap.eachLayer(function(layer) {
-//     geojson.push(layer);
-//   });
-//   geojson = JSON.stringify(geojson, getCircularReplacer());
-// }
-//
-// function loadMap() {
-//   mymap.eachLayer(function(layer) {
-//     mymap.removeLayer(layer);
-//   });
-//
-//   let jsondata = JSON.parse(geojson);
-//   jsondata.forEach((element) => {
-//     console.log(element)
-//     layer = L.GeoJSON.geometryToLayer(element);
-//     console.log(layer);
-//     layer.addTo(mymap);
-//   });
-// }
+var geojson = [];
+
+function saveMap() {
+  // getCircularReplacer is taken from https://docs.w3cub.com/javascript/errors/cyclic_object_value/
+  const getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+  };
+
+  mymap.eachLayer(function(layer) {
+    geojson.push(layer);
+  });
+  geojson = JSON.stringify(geojson, getCircularReplacer());
+}
+
+function loadMap() {
+  mymap.eachLayer(function(layer) {
+    mymap.removeLayer(layer);
+  });
+
+  let jsondata = JSON.parse(geojson);
+  jsondata.forEach((element) => {
+    console.log(element)
+    layer = L.GeoJSON.geometryToLayer(element);
+    console.log(layer);
+    layer.addTo(mymap);
+  });
+}
