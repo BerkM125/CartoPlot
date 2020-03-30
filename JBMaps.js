@@ -2,6 +2,7 @@ var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var mapClickState = 0;
 var linestate, linestate2;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+var freeFormState = 1;
 
 function plotdraggablepoint() {
   var locationfield = document.getElementById("locationfield").value;
@@ -42,7 +43,62 @@ function plotOnClick() {
   });
 }
 
-function startRuler() {
+function startFreeForm() {
+	let point1;
+	let point2;
+	let points;
+	let line;
+	let drawstate = 0;
+	let clickstate = 0;
+	let total = 0;
+	let distanceString;
+	point2 = L.marker([0, 0], {
+		draggable: false,
+		riseOnHover: true
+    });
+	mymap.on('mousedown', function(event) {
+		if(clickstate === 0) {
+			point1 = L.marker(event.latlng, {
+				draggable: false,
+				riseOnHover: true
+			}).addTo(mymap);
+			mymap.on('mousemove', function(event) {
+				if (drawstate === 0) {
+					point2 = L.marker(event.latlng, {
+						draggable: false,
+						riseOnHover: true
+					}).addTo(mymap);
+					drawstate += 1;
+				}
+				else if (drawstate === 1) {
+					points = [point2.getLatLng(), event.latlng];
+					line = L.polyline(points, {
+						color: 'red',
+						opacity: 0.5,
+						smoothFactor: 1
+					}).addTo(mymap);
+					total += L.GeometryUtil.length([point2.getLatLng(), event.latlng]);
+					point2.setLatLng(event.latlng);					
+				}
+			});
+			clickstate = 1;
+		}
+		else if (clickstate === 1) {
+			distanceString = total.toString() + " Meters<br>" + (Math.round((total * 0.001) * 100) / 100).toString() + " Kilometers<br>" + (Math.round((total * 0.0006) * 100) / 100).toString() + " Miles<br>";
+			point2.bindPopup(distanceString, {
+				className: 'popUp',
+				closeOnClick: false,
+				autoClose: false
+			}).openPopup();
+			mymap.removeEventListener('mousemove');
+			mymap.removeEventListener('mousedown');
+			return;
+		}
+	});
+	
+}
+
+function linearRuler () {
   document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
   document.getElementById("rulerEnabler").style.backgroundPosition = "left";
 
@@ -63,11 +119,6 @@ function startRuler() {
         riseOnHover: true
       }).addTo(mymap);
     } else {
-      point2 = L.marker(event.latlng, {
-        draggable: false,
-        riseOnHover: true
-      }).addTo(mymap);
-
       mymap.removeLayer(line);
       points = [point1.getLatLng(), point2.getLatLng()];
       meters = (Math.round(L.GeometryUtil.length([point1.getLatLng(), point2.getLatLng()]) * 100) / 100);
@@ -113,6 +164,25 @@ function startRuler() {
       }).addTo(mymap);
     }
   });
+}
+
+function startRuler() {
+	/*switch(rulerDrawingMode) {
+		case 0:
+			linearRuler();
+			break;
+		case 1:
+			startFreeForm();
+			break;
+		default:
+			break;
+	}*/
+	if (freeFormState % 2 === 0) {
+		startFreeForm();
+	}
+	else {
+		linearRuler();
+	}
 }
 
 function removeAllLayers() {
