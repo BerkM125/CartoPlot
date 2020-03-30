@@ -1,11 +1,10 @@
 var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
-var bindstring = "Issaquah";
 var mapClickState = 0;
 var linestate, linestate2;
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
 
 function plotdraggablepoint() {
-  var locationfield = document.getElementById("locationfield");
+  var locationfield = document.getElementById("locationfield").value;
   var latitude, longitude;
   if (document.getElementById("locationfield2").value == "" || document.getElementById("locationfield3").value == "") {
     alert("You need to put both latitude and longitude in order to plot");
@@ -15,14 +14,15 @@ function plotdraggablepoint() {
   longitude = document.getElementById("locationfield3").value;
 
   mymap.setView([latitude, longitude], 13);
-  bindstring = locationfield.value;
   var marker = L.marker([latitude, longitude], {
     riseOnHover: true,
     draggable: true
   }).addTo(mymap);
-  marker.bindTooltip(bindstring, {
-    className: 'tooltipclass'
-  }).openTooltip();
+  if (locationfield != "") {
+    marker.bindTooltip(locationfield, {
+      className: 'tooltipclass'
+    }).openTooltip();
+  }
 }
 
 function plotOnClick() {
@@ -31,9 +31,13 @@ function plotOnClick() {
       draggable: true,
       riseOnHover: true
     }).addTo(mymap);
-    marker.bindTooltip(bindstring, {
-    	className: 'tooltipclass'
-    }).openTooltip();
+
+    let locationfield = document.getElementById("locationfield").value;
+    if (locationfield != "") {
+      marker.bindTooltip(locationfield, {
+        className: 'tooltipclass'
+      }).openTooltip();
+    }
     mymap.removeEventListener("click");
   });
 }
@@ -48,7 +52,7 @@ function startRuler() {
   let point2State = 0;
   let distanceString;
   let meters;
-  point2 = L.marker([0,0], {
+  point2 = L.marker([0, 0], {
     draggable: false,
     riseOnHover: true
   });
@@ -67,7 +71,7 @@ function startRuler() {
       mymap.removeLayer(line);
       points = [point1.getLatLng(), point2.getLatLng()];
       meters = (Math.round(L.GeometryUtil.length([point1.getLatLng(), point2.getLatLng()]) * 100) / 100);
-      distanceString = meters.toString() + " Meters<br>" + (Math.round((meters * 0.001)*100)/100).toString() + " Kilometers<br>" + (Math.round((meters * 0.0006)*100)/100).toString() + " Miles<br>";
+      distanceString = meters.toString() + " Meters<br>" + (Math.round((meters * 0.001) * 100) / 100).toString() + " Kilometers<br>" + (Math.round((meters * 0.0006) * 100) / 100).toString() + " Miles<br>";
       line = L.polyline(points, {
         color: 'red',
         weight: 3,
@@ -85,31 +89,30 @@ function startRuler() {
       document.getElementById("rulerEnabler").style.backgroundPosition = "right";
     }
   });
-	mymap.on("mousemove", function(event) {
-		if (line != undefined) {
-		  mymap.removeLayer(line);
-		}
-		if (point1 != undefined) {
-		  points = [point1.getLatLng(), event.latlng];
-		  if(point2State === 0){
-			  mymap.removeLayer(point2);
-			  point2 = L.marker(event.latlng, {
-				draggable: false,
-				riseOnHover: true
-			  }).addTo(mymap);
-			  point2State+=1;
-		  }
-		  else {
+  mymap.on("mousemove", function(event) {
+    if (line != undefined) {
+      mymap.removeLayer(line);
+    }
+    if (point1 != undefined) {
+      points = [point1.getLatLng(), event.latlng];
+      if (point2State === 0) {
+        mymap.removeLayer(point2);
+        point2 = L.marker(event.latlng, {
+          draggable: false,
+          riseOnHover: true
+        }).addTo(mymap);
+        point2State += 1;
+      } else {
 
-			  point2State = 0;
-		  }
-		  line = L.polyline(points, {
-			color: 'red',
-			opacity: 0.5,
-			smoothFactor: 1
-		  }).addTo(mymap);
-		}
-	});
+        point2State = 0;
+      }
+      line = L.polyline(points, {
+        color: 'red',
+        opacity: 0.5,
+        smoothFactor: 1
+      }).addTo(mymap);
+    }
+  });
 }
 
 function removeAllLayers() {
@@ -125,6 +128,7 @@ document.onkeydown = function(event) {
   event = event || window.event;
   if (event.keyCode == 27) {
     document.getElementById("slider").checked = false;
+    sidebarUpdate();
   }
 };
 
