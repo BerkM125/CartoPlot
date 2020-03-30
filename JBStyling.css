@@ -30,15 +30,13 @@ body {
   width: 80%;
   margin-bottom: 0.3rem;
   transition: all 0.7s;
-  border: 2px solid #48c9b0;
-  background: linear-gradient(to left, rgba(255,255,255,0) 50%, #48c9b0 50%);
+  border: rgba(255, 255, 255, 0.75);
   background-size: 200% 100%;
   background-position: right;
 }
 
 .form__input:focus, .form__input:hover {
   width: 100%;
-  background-position: left;
 }
 
 .submitButton {
