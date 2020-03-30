@@ -36,7 +36,7 @@
         <input id="locationfield2" type="text" class="form__input" placeholder="Latitude..." required="">
         <input id="locationfield3" type="text" class="form__input" placeholder="Longitude..." required="" style="margin-bottom: 10px;">
         <button class="submitButton" onclick="plotdraggablepoint()">Plot Coords</button>
-        <p style="display: inline; padding-left: 3px; padding-right: 3px;">or</p>
+        <p style="display: inline; padding-left: 5px; padding-right: 5px;">or</p>
         <button class="submitButton" onclick="plotOnClick()">Plot On Click</button>
       </div>
       <div class="sidebarSection">
@@ -47,6 +47,11 @@
       <div class="sidebarSection">
         <p>Erase all items on map</p>
         <button class="submitButton" onclick="removeAllLayers()">Erase</button>
+      </div>
+      <div class="sidebarSection">
+        <p>Save or Load map to edit</p>
+        <button class="submitButton" onclick="saveMap()" style="margin-right: 7px;">Save</button>
+        <button class="submitButton" onclick="loadMap()">Load</button>
       </div>
     </nav>
   </div>
