@@ -35,16 +35,16 @@
     <nav class="sidebar">
       <div class="sidebarSection">
         <p>Plot | Add a new point on the map</p>
-        <input id="locationfield" type="text" class="form__input" placeholder="New Location Name..." required="">
-        <input id="locationfield2" type="text" class="form__input" placeholder="New Latitude..." required="">
-        <input id="locationfield3" type="text" class="form__input" placeholder="New Longitude..." required="" style="margin-bottom: 10px;">
+        <input id="locationfield" type="text" class="form__input" placeholder="Location Name..." required="">
+        <input id="locationfield2" type="text" class="form__input" placeholder="Latitude..." required="">
+        <input id="locationfield3" type="text" class="form__input" placeholder="Longitude..." required="" style="margin-bottom: 10px;">
         <button class="submitButton" onclick="plotdraggablepoint()">Plot Coords</button>
         <p style="display: inline; padding-left: 3px; padding-right: 3px;">or</p>
         <button class="submitButton" onclick="plotOnClick()">Plot On Click</button>
       </div>
       <div class="sidebarSection">
         <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
-        <button class="submitButton" onclick="startRuler()">Activate Ruler</button>
+        <button class="submitButton" onclick="startRuler()" id="rulerEnabler">Activate Ruler</button>
         <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);" id="onRulerEnabled">Activated!</p>
       </div>
       <div class="sidebarSection">

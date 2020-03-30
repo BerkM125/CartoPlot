@@ -40,6 +40,7 @@ function plotOnClick() {
 
 function startRuler() {
   document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,1)";
+  document.getElementById("rulerEnabler").style.backgroundPosition = "left";
 
   let point1;
   let point2;
@@ -81,6 +82,7 @@ function startRuler() {
       mymap.removeEventListener("click");
       mymap.removeEventListener("mousemove");
       document.getElementById("onRulerEnabled").style.color = "rgba(255,255,255,0)";
+      document.getElementById("rulerEnabler").style.backgroundPosition = "right";
     }
   });
 	mymap.on("mousemove", function(event) {
@@ -98,7 +100,7 @@ function startRuler() {
 			  point2State+=1;
 		  }
 		  else {
-			  
+
 			  point2State = 0;
 		  }
 		  line = L.polyline(points, {
