@@ -59,7 +59,7 @@ body {
 }
 
 .submitButton:hover {
-  background-position: left;
+  background-position: left !important;
 }
 
 .submitButton:active {
