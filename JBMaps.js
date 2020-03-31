@@ -207,36 +207,18 @@ function sidebarUpdate() {
 // var geojson = [];
 //
 // function saveMap() {
-//   // getCircularReplacer is taken from https://docs.w3cub.com/javascript/errors/cyclic_object_value/
-//   const getCircularReplacer = () => {
-//     const seen = new WeakSet();
-//     return (key, value) => {
-//       if (typeof value === "object" && value !== null) {
-//         if (seen.has(value)) {
-//           return;
-//         }
-//         seen.add(value);
-//       }
-//       return value;
-//     };
-//   };
-//
 //   mymap.eachLayer(function(layer) {
-//     geojson.push(layer);
+//     console.log(layer);
+//     geojson.push(layer.toGeoJSON());
 //   });
-//   geojson = JSON.stringify(geojson, getCircularReplacer());
 // }
 //
 // function loadMap() {
-//   mymap.eachLayer(function(layer) {
-//     mymap.removeLayer(layer);
-//   });
+//   removeAllLayers();
 //
-//   let jsondata = JSON.parse(geojson);
-//   jsondata.forEach((element) => {
-//     console.log(element)
-//     layer = L.GeoJSON.geometryToLayer(element);
-//     console.log(layer);
+//   geojson.forEach((item) => {
+//     layer = L.GeoJSON.geometryToLayer(item);
 //     layer.addTo(mymap);
 //   });
+//
 // }
