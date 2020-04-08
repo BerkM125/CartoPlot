@@ -1,10 +1,36 @@
 var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var mapClickState = 0;
 var linestate, linestate2;
-var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	maxZoom: 17,
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+});
+var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmVya20xMjUiLCJhIjoiY2s4Z3NwY3BvMDUyMDNncWh0cHkxazF1dyJ9.EnlBFMTqmwjsZko93I8EDA', {
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+		'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1
+}).addTo(mymap);
+
 var freeFormState = 1;
 var locationArray = [L.latLng(47.5301, -122.0326), L.latLng(47.6163, -122.0356)];
 var locationTableIndex = 2; //There are 2 items in the array already.
+
+for(var i = locationTableIndex; i < localStorage.getItem('locationCount'); i++) {
+	var locationstring = localStorage.getItem(i);
+	var locationJSON = JSON.parse(locationstring);
+	console.log(locationstring);
+	L.geoJSON(locationJSON).addTo(mymap);
+	localStorage.setItem(i, JSON.stringify(locationJSON));
+	locationTableIndex = i+1;
+}
 
 function HashTable(obj)
 {
@@ -111,6 +137,7 @@ function plotdraggablepoint() {
   locationArray.push(marker.getLatLng());
   locationht.setItem(locationfield, locationTableIndex);
   locationTableIndex += 1;
+  console.log(marker.toGeoJSON());
 }
 
 function plotOnClick() {
@@ -129,6 +156,11 @@ function plotOnClick() {
       }).openTooltip();
     }
     mymap.removeEventListener("click");
+	console.log(marker.toGeoJSON());
+	localStorage.setItem(locationTableIndex, JSON.stringify(marker.toGeoJSON()));
+	localStorage.setItem('locationCount', locationTableIndex+1);
+	console.log(localStorage.getItem(locationTableIndex));
+	console.log(localStorage.getItem('locationCount'));
   });
 }
 
@@ -288,10 +320,14 @@ function startRuler() {
 
 function removeAllLayers() {
   mymap.eachLayer(function(layer) {
-    if (layer._url != "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") {
+    if (layer._url != 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmVya20xMjUiLCJhIjoiY2s4Z3NwY3BvMDUyMDNncWh0cHkxazF1dyJ9.EnlBFMTqmwjsZko93I8EDA') {
       mymap.removeLayer(layer);
     }
   });
+}
+
+function clearLocalData() {
+	localStorage.clear();
 }
 
 // Close sidebar when ESC pressed
@@ -310,4 +346,22 @@ function sidebarUpdate() {
   } else {
     document.getElementById("togglerLabel").innerHTML = "☰ Tools";
   }
+}
+
+function toMapbox () {
+	mymap.removeLayer(osm);
+	mymap.removeLayer(OpenTopoMap);
+	mapboxLayer.addTo(mymap);
+}
+
+function toOSM () {
+	mymap.removeLayer(mapboxLayer);
+	mymap.removeLayer(OpenTopoMap);
+	osm.addTo(mymap);
+}
+
+function toTopo () {
+	mymap.removeLayer(osm);
+	mymap.removeLayer(mapboxLayer);
+	OpenTopoMap.addTo(mymap);
 }
