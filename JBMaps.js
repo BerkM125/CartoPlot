@@ -17,18 +17,38 @@ var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1
+});
+
+var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
+googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
+googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
 }).addTo(mymap);
 
 var freeFormState = 1;
 var locationArray = [L.latLng(47.5301, -122.0326), L.latLng(47.6163, -122.0356)];
 var locationTableIndex = 2; //There are 2 items in the array already.
+var locationht = new HashTable({"issaquah": 0, "sammamish": 1});
 
 for(var i = locationTableIndex; i < localStorage.getItem('locationCount'); i++) {
 	var locationstring = localStorage.getItem(i);
-	var locationJSON = JSON.parse(locationstring);
-	console.log(locationstring);
-	L.geoJSON(locationJSON).addTo(mymap);
-	localStorage.setItem(i, JSON.stringify(locationJSON));
+  var locationJSON = JSON.parse(locationstring);
+  var locationName = (localStorage.getItem('tooltipNumber'+i));
+  var tmarker = L.geoJSON(locationJSON).bindTooltip(locationName, {className: 'tooltipclass'}).openTooltip().addTo(mymap);
+  var coords = [];
+  console.log("Location JSON: "+locationstring);
+  localStorage.setItem(i, JSON.stringify(locationJSON))
+  locationArray.push(coords);
+  locationht.setItem(locationstring, i);
 	locationTableIndex = i+1;
 }
 
@@ -113,7 +133,7 @@ function HashTable(obj)
         this.length = 0;
     }
 }
-var locationht = new HashTable({"issaquah": 0, "sammamish": 1});
+
 function plotdraggablepoint() {
   var locationfield = document.getElementById("locationfield").value;
   var latitude, longitude;
@@ -137,7 +157,13 @@ function plotdraggablepoint() {
   locationArray.push(marker.getLatLng());
   locationht.setItem(locationfield, locationTableIndex);
   locationTableIndex += 1;
-  console.log(marker.toGeoJSON());
+  console.log(marker.toGeoJSON()); 
+	localStorage.setItem(locationTableIndex, JSON.stringify(marker.toGeoJSON()));
+	localStorage.setItem('locationCount', locationTableIndex+1);
+  localStorage.setItem(('tooltipNumber'+locationTableIndex), locationfield);
+	console.log(localStorage.getItem(locationTableIndex));
+	console.log(localStorage.getItem('locationCount'));
+  console.log(localStorage.getItem('tooltipNumber'+locationTableIndex));
 }
 
 function plotOnClick() {
@@ -156,11 +182,13 @@ function plotOnClick() {
       }).openTooltip();
     }
     mymap.removeEventListener("click");
-	console.log(marker.toGeoJSON());
+  console.log(marker.toGeoJSON());
 	localStorage.setItem(locationTableIndex, JSON.stringify(marker.toGeoJSON()));
 	localStorage.setItem('locationCount', locationTableIndex+1);
+  localStorage.setItem(('tooltipNumber'+locationTableIndex), locationfield);
 	console.log(localStorage.getItem(locationTableIndex));
 	console.log(localStorage.getItem('locationCount'));
+  console.log(localStorage.getItem('tooltipNumber'+locationTableIndex));
   });
 }
 
@@ -350,18 +378,28 @@ function sidebarUpdate() {
 
 function toMapbox () {
 	mymap.removeLayer(osm);
-	mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(googleHybrid);
 	mapboxLayer.addTo(mymap);
 }
 
 function toOSM () {
 	mymap.removeLayer(mapboxLayer);
-	mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(googleHybrid);
 	osm.addTo(mymap);
 }
 
 function toTopo () {
 	mymap.removeLayer(osm);
-	mymap.removeLayer(mapboxLayer);
+  mymap.removeLayer(mapboxLayer);
+  mymap.removeLayer(googleHybrid);
 	OpenTopoMap.addTo(mymap);
+}
+
+function toSatellite () {
+  mymap.removeLayer(osm);
+	mymap.removeLayer(mapboxLayer);
+  mymap.removeLayer(OpenTopoMap);
+  googleHybrid.addTo(mymap);
 }

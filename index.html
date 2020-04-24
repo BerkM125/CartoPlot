@@ -26,9 +26,10 @@
 	  <div class="modal-content">
 		<span class="close">&times;</span>
 		<p style="font-family: 'Muli', sans-serif; color:black;">Select a map layer...</p>
-		<button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.PNG"/></button>
-		<button onclick="toOSM()"><img id="layerImages" src="images/osm.PNG"/></button>
-		<button onclick="toTopo()"><img id="layerImages" src="images/topo.PNG"/></button>
+		<button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.png"/></button>
+		<button onclick="toOSM()"><img id="layerImages" src="images/osm.png"/></button>
+    <button onclick="toTopo()"><img id="layerImages" src="images/topo.png"/></button>
+    <button onclick="toSatellite()"><img id="layerImages" src="images/hybrid.png"/></button>
 	  </div>
 
 	</div>
@@ -84,7 +85,7 @@
     </nav>
   </div>
 
-  <div id="mapid" style="width: 150%; height:100%; position: relative; outline: currentcolor none medium;" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0">
+  <div id="mapid" style="width: 100%; height:100%; position: relative; outline: currentcolor none medium;" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0">
 
   <script src="JBMaps.js"></script> <!-- Leave this at the end because otherwise the map won't get initialized -->
 
