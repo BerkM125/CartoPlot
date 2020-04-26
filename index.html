@@ -1,99 +1,98 @@
-﻿<html><head>
-  <title>Leaflet Maps</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-  <script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Muli&amp;display=swap" rel="stylesheet">
-  <script type="text/javascript" src="leaflet.geometryutil.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-	<script src="https://rawgit.com/k4r573n/leaflet-control-osm-geocoder/master/Control.OSMGeocoder.js"></script>
-  <link rel="stylesheet" href="JBStyling.css">
-</head>
 
-<body>
-  <header>
-    <img class="logo" src="images/jbsoftwaresystems.jpg" alt="logo">
-    <nav>
-      <ul class="nav_links">
-        <li><a href="#"></a></li>
-      </ul>
-    </nav>
-    <label for="slider" class="slidertoggler" id="togglerLabel">☰ Tools</label>
-	<label id="layerButton" onclick="" style="margin-left: 125px;" class="slidertoggler">⚙ Layers</label>
-  </header>
-	<div id="layerModal" class="modal">
-	  <div class="modal-content">
-		<span class="close">&times;</span>
-		<p style="font-family: 'Muli', sans-serif; color:black;">Select a map layer...</p>
-		<button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.png"/></button>
-		<button onclick="toOSM()"><img id="layerImages" src="images/osm.png"/></button>
-    <button onclick="toTopo()"><img id="layerImages" src="images/topo.png"/></button>
-    <button onclick="toSatellite()"><img id="layerImages" src="images/hybrid.png"/></button>
-    <button onclick="toGoogleMaps()"><img id="layerImages" src="images/googlemaps.png"/></button>
-	  </div>
 
-	</div>
-  <script>
-	var modal = document.getElementById("layerModal");
-	var btn = document.getElementById("layerButton");
-	var span = document.getElementsByClassName("close")[0];
-	btn.onclick = function() {
-	  modal.style.display = "block";
-	}
-	span.onclick = function() {
-	  modal.style.display = "none";
-	}
-	window.onclick = function(event) {
-	  if (event.target == modal) {
-		modal.style.display = "none";
-	  }
-	}
-  </script>
-  <input type="checkbox" id="slider" onclick="sidebarUpdate()" name="" value="">
-  <div class="slidercontainer">
-    <nav class="sidebar">
-      <div class="sidebarSection">
-        <p>Plot | Add a new point on the map</p>
-        <input id="locationfield" type="text" class="form__input" placeholder="Location Name..." required="">
-        <input id="locationfield2" type="text" class="form__input" placeholder="Latitude..." required="">
-        <input id="locationfield3" type="text" class="form__input" placeholder="Longitude..." required="" style="margin-bottom: 10px;">
-        <button class="submitButton plotButtons" onclick="plotdraggablepoint()">Plot Coords</button>
-        <p style="display: inline; padding-left: 3px; padding-right: 3px;">or</p>
-        <button class="submitButton plotButtons" onclick="plotOnClick()">Plot On Click</button>
+﻿
+<html>
+   <head>
+      <title>Leaflet Maps</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+      <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+      <script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Muli&amp;display=swap" rel="stylesheet">
+      <script type="text/javascript" src="leaflet.geometryutil.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+      <script src="https://rawgit.com/k4r573n/leaflet-control-osm-geocoder/master/Control.OSMGeocoder.js"></script>
+      <link rel="stylesheet" href="JBStyling.css">
+   </head>
+   <body>
+      <header>
+         <img class="logo" src="images/jbsoftwaresystems.jpg" alt="logo">
+         <nav>
+            <ul class="nav_links">
+               <li><a href="#"></a></li>
+            </ul>
+         </nav>
+         <label for="slider" class="slidertoggler" id="togglerLabel">☰ Tools</label>
+         <label id="layerButton" onclick="" style="margin-left: 125px;" class="slidertoggler">⚙ Layers</label>
+      </header>
+      <div id="layerModal" class="modal">
+         <div class="modal-content">
+            <span class="close">&times;</span>
+            <p style="font-family: 'Muli', sans-serif; color:black;">Select a map layer...</p>
+            <button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.PNG"/></button>
+            <button onclick="toOSM()"><img id="layerImages" src="images/osm.PNG"/></button>
+            <button onclick="toTopo()"><img id="layerImages" src="images/topo.PNG"/></button>
+            <button onclick="toSatellite()"><img id="layerImages" src="images/hybrid.PNG"/></button>
+            <button onclick="toGoogleMaps()"><img id="layerImages" src="images/googlemaps.PNG"/></button>
+         </div>
       </div>
-      <div class="sidebarSection">
-        <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
-		<p style="display:inline-block; margin-left:0px; margin-top:0px;margin-bottom: 0px;">Free-Form Mode</p>
-		<label class="switch">
-		  <input id="switchinput" onclick="if(document.getElementById('switchinput').checked === true) freeFormState += 1;" type="checkbox">
-		  <span class="slider round"></span>
-		</label>
-        <button class="submitButton" onclick="startRuler()" id="rulerEnabler">Activate Ruler</button>
-        <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);" id="onRulerEnabled">Activated!</p>
+      <script>
+         var modal = document.getElementById("layerModal");
+         var btn = document.getElementById("layerButton");
+         var span = document.getElementsByClassName("close")[0];
+         btn.onclick = function() {
+           modal.style.display = "block";
+         }
+         span.onclick = function() {
+           modal.style.display = "none";
+         }
+         window.onclick = function(event) {
+           if (event.target == modal) {
+         	modal.style.display = "none";
+           }
+         }
+          
+      </script>
+      <input type="checkbox" id="slider" onclick="sidebarUpdate()" name="" value="">
+      <div class="slidercontainer">
+         <nav class="sidebar">
+            <div class="sidebarSection">
+               <p>Plot | Add a new point on the map</p>
+               <input id="locationfield" type="text" class="form__input" placeholder="Location Name..." required="">
+               <input id="locationfield2" type="text" class="form__input" placeholder="Latitude..." required="">
+               <input id="locationfield3" type="text" class="form__input" placeholder="Longitude..." required="" style="margin-bottom: 10px;">
+               <button class="submitButton plotButtons" onclick="plotdraggablepoint()">Plot Coords</button>
+               <p style="display: inline; padding-left: 3px; padding-right: 3px;">or</p>
+               <button class="submitButton plotButtons" onclick="plotOnClick()">Plot On Click</button>
+            </div>
+            <div class="sidebarSection">
+               <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
+               <p style="display:inline-block; margin-left:0px; margin-top:0px;margin-bottom: 0px;">Free-Form Mode</p>
+               <label class="switch">
+               <input id="switchinput" onclick="if(document.getElementById('switchinput').checked === true) freeFormState += 1;" type="checkbox">
+               <span class="slider round"></span>
+               </label>
+               <button class="submitButton" onclick="startRuler()" id="rulerEnabler">Activate Ruler</button>
+               <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);" id="onRulerEnabled">Activated!</p>
+            </div>
+            <div class="sidebarSection">
+               <p>Erase all items on map</p>
+               <button class="submitButton" onclick="removeAllLayers()">Erase</button>
+               <p>Remove location and marker data from local storage</p>
+               <button style="margin-top:10px;"class="submitButton" onclick="clearLocalData()">Clear Local Data</button>
+            </div>
+            <div class="sidebarSection">
+               <p>Search a plotted location</p>
+               <input id="locationfield4" type="text" class="form__input" placeholder="Location Name..." required="">
+               <button class="submitButton" onclick="locationSearch()">Search</button>
+            </div>
+         </nav>
       </div>
-    
-      <div class="sidebarSection">
-        <p>Erase all items on map</p>
-        <button class="submitButton" onclick="removeAllLayers()">Erase</button>
-		<p>Remove location and marker data from local storage</p>
-		<button style="margin-top:10px;"class="submitButton" onclick="clearLocalData()">Clear Local Data</button>
-      </div>
-	  <div class="sidebarSection">
-		<p>Search a plotted location</p>
-		<input id="locationfield4" type="text" class="form__input" placeholder="Location Name..." required="">
-		<button class="submitButton" onclick="locationSearch()">Search</button>
-	  </div>
-    </nav>
-  </div>
+      <div id="mapid" style="width: 100%; height:100%; position: relative; outline: currentcolor none medium;" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0">
+      <script src="JBMaps.js"></script> <!-- Leave this at the end because otherwise the map won't get initialized -->
+   </body>
+</html>
 
-  <div id="mapid" style="width: 100%; height:100%; position: relative; outline: currentcolor none medium;" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0">
-
-  <script src="JBMaps.js"></script> <!-- Leave this at the end because otherwise the map won't get initialized -->
-
-
-
-</body></html>
