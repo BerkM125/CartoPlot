@@ -22,7 +22,7 @@ var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
 var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
     maxZoom: 20,
     subdomains:['mt0','mt1','mt2','mt3']
-});
+}).addTo(mymap);
 
 googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
     maxZoom: 20,
@@ -32,7 +32,10 @@ googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
 googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
     maxZoom: 20,
     subdomains:['mt0','mt1','mt2','mt3']
-}).addTo(mymap);
+});
+
+var osmGeocoder = new L.Control.OSMGeocoder({placeholder: 'Search location...'});
+mymap.addControl(osmGeocoder);
 
 var freeFormState = 1;
 var locationArray = [L.latLng(47.5301, -122.0326), L.latLng(47.6163, -122.0356)];
@@ -212,7 +215,8 @@ function startFreeForm() {
 	let drawstate = 0;
 	let clickstate = 0;
 	let total = 0;
-	let distanceString;
+  let distanceString;
+
 	point2 = L.marker([0, 0], {
 		draggable: false,
 		riseOnHover: true
@@ -255,7 +259,7 @@ function startFreeForm() {
 			mymap.removeEventListener('mousedown');
 			return;
 		}
-	});
+  });
 	
 }
 
@@ -338,7 +342,7 @@ function startRuler() {
 		default:
 			break;
 	}*/
-	if (freeFormState % 2 === 0) {
+	if (document.getElementById('switchinput').checked === true) {
 		startFreeForm();
 	}
 	else {
@@ -380,6 +384,7 @@ function toMapbox () {
 	mymap.removeLayer(osm);
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleHybrid);
+  mymap.removeLayer(googleStreets);
 	mapboxLayer.addTo(mymap);
 }
 
@@ -387,6 +392,7 @@ function toOSM () {
 	mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleHybrid);
+  mymap.removeLayer(googleStreets);
 	osm.addTo(mymap);
 }
 
@@ -394,6 +400,7 @@ function toTopo () {
 	mymap.removeLayer(osm);
   mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(googleHybrid);
+  mymap.removeLayer(googleStreets);
 	OpenTopoMap.addTo(mymap);
 }
 
@@ -401,5 +408,14 @@ function toSatellite () {
   mymap.removeLayer(osm);
 	mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(googleStreets);
   googleHybrid.addTo(mymap);
+}
+
+function toGoogleMaps() {
+  mymap.removeLayer(osm);
+	mymap.removeLayer(mapboxLayer);
+  mymap.removeLayer(OpenTopoMap);
+  mymap.removeLayer(googleHybrid);
+  googleStreets.addTo(mymap);
 }

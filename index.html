@@ -8,6 +8,9 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Muli&amp;display=swap" rel="stylesheet">
   <script type="text/javascript" src="leaflet.geometryutil.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	<script src="https://rawgit.com/k4r573n/leaflet-control-osm-geocoder/master/Control.OSMGeocoder.js"></script>
   <link rel="stylesheet" href="JBStyling.css">
 </head>
 
@@ -26,10 +29,11 @@
 	  <div class="modal-content">
 		<span class="close">&times;</span>
 		<p style="font-family: 'Muli', sans-serif; color:black;">Select a map layer...</p>
-		<button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.PNG"/></button>
-		<button onclick="toOSM()"><img id="layerImages" src="images/osm.PNG"/></button>
-   		<button onclick="toTopo()"><img id="layerImages" src="images/topo.PNG"/></button>
-    		<button onclick="toSatellite()"><img id="layerImages" src="images/hybrid.PNG"/></button>
+		<button onclick="toMapbox()"><img id="layerImages" src="images/mapbox.png"/></button>
+		<button onclick="toOSM()"><img id="layerImages" src="images/osm.png"/></button>
+    <button onclick="toTopo()"><img id="layerImages" src="images/topo.png"/></button>
+    <button onclick="toSatellite()"><img id="layerImages" src="images/hybrid.png"/></button>
+    <button onclick="toGoogleMaps()"><img id="layerImages" src="images/googlemaps.png"/></button>
 	  </div>
 
 	</div>
@@ -65,12 +69,13 @@
         <p>Ruler | Press enable then click on both locations you want to measure the distance between</p>
 		<p style="display:inline-block; margin-left:0px; margin-top:0px;margin-bottom: 0px;">Free-Form Mode</p>
 		<label class="switch">
-		  <input id="switchinput" onclick="freeFormState += 1;" type="checkbox">
+		  <input id="switchinput" onclick="if(document.getElementById('switchinput').checked === true) freeFormState += 1;" type="checkbox">
 		  <span class="slider round"></span>
 		</label>
         <button class="submitButton" onclick="startRuler()" id="rulerEnabler">Activate Ruler</button>
         <p style="display: inline; padding-left: 5px; color: rgba(255,255,255,0);" id="onRulerEnabled">Activated!</p>
       </div>
+    
       <div class="sidebarSection">
         <p>Erase all items on map</p>
         <button class="submitButton" onclick="removeAllLayers()">Erase</button>
