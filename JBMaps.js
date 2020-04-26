@@ -35,9 +35,10 @@ googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
 });
 
 var searchOptions = {
-    collapsed: false, 
+    collapsed: true, 
     position: 'topright',
-    text: 'Search'
+    text: 'Search',
+    placeholder: 'Location name...',
 };
 var osmGeocoder = new L.Control.OSMGeocoder(searchOptions);
 mymap.addControl(osmGeocoder);
