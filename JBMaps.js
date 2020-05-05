@@ -1,6 +1,14 @@
 var mymap = L.map('mapid').setView([47.5301, -122.0326], 13);
 var mapClickState = 0;
 var linestate, linestate2;
+
+var currentMapURL = 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}';
+var satelliteLayer = 'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}';
+var topoLayer = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+var osmLayer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var mapboxLayerURL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmVya20xMjUiLCJhIjoiY2s4Z3NwY3BvMDUyMDNncWh0cHkxazF1dyJ9.EnlBFMTqmwjsZko93I8EDA';
+var googleLayer = 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}';
+
 var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17,12 +25,12 @@ var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1
-});
+}).addTo(mymap);
 
 var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
     maxZoom: 20,
     subdomains:['mt0','mt1','mt2','mt3']
-}).addTo(mymap);
+});
 
 googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
     maxZoom: 20,
@@ -40,6 +48,7 @@ var searchOptions = {
     text: 'Search',
     placeholder: 'Location name...',
 };
+
 var osmGeocoder = new L.Control.OSMGeocoder(searchOptions);
 mymap.addControl(osmGeocoder);
 
@@ -284,7 +293,7 @@ function linearRuler () {
     riseOnHover: true
   });
   mymap.on('click', function(event) {
-    if (point1 == undefined) {
+    if (point1 === undefined) {
       point1 = L.marker(event.latlng, {
         draggable: false,
         riseOnHover: true
@@ -358,7 +367,7 @@ function startRuler() {
 
 function removeAllLayers() {
   mymap.eachLayer(function(layer) {
-    if (layer._url != 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYmVya20xMjUiLCJhIjoiY2s4Z3NwY3BvMDUyMDNncWh0cHkxazF1dyJ9.EnlBFMTqmwjsZko93I8EDA') {
+    if (layer._url != currentMapURL) {
       mymap.removeLayer(layer);
     }
   });
@@ -391,7 +400,8 @@ function toMapbox () {
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleHybrid);
   mymap.removeLayer(googleStreets);
-	mapboxLayer.addTo(mymap);
+  mapboxLayer.addTo(mymap);
+  currentMapURL = mapboxLayerURL;
 }
 
 function toOSM () {
@@ -399,6 +409,7 @@ function toOSM () {
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleHybrid);
   mymap.removeLayer(googleStreets);
+  currentMapURL = osmLayer;
 	osm.addTo(mymap);
 }
 
@@ -407,6 +418,7 @@ function toTopo () {
   mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(googleHybrid);
   mymap.removeLayer(googleStreets);
+  currentMapURL = topoLayer;
 	OpenTopoMap.addTo(mymap);
 }
 
@@ -415,6 +427,7 @@ function toSatellite () {
 	mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleStreets);
+  currentMapURL = satelliteLayer;
   googleHybrid.addTo(mymap);
 }
 
@@ -423,5 +436,6 @@ function toGoogleMaps() {
 	mymap.removeLayer(mapboxLayer);
   mymap.removeLayer(OpenTopoMap);
   mymap.removeLayer(googleHybrid);
+  currentMapURL = googleLayer;
   googleStreets.addTo(mymap);
 }
