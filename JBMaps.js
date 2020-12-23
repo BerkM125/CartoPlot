@@ -63,7 +63,6 @@ for(var i = locationTableIndex; i < localStorage.getItem('locationCount'); i++) 
   var locationName = (localStorage.getItem('tooltipNumber'+i));
   var tmarker = L.geoJSON(locationJSON).bindTooltip(locationName, {className: 'tooltipclass'}).openTooltip().addTo(mymap);
   var coords = [];
-  console.log("Location JSON: "+locationstring);
   localStorage.setItem(i, JSON.stringify(locationJSON))
   locationArray.push(coords);
   locationht.setItem(locationstring, i);
@@ -175,13 +174,9 @@ function plotdraggablepoint() {
   locationArray.push(marker.getLatLng());
   locationht.setItem(locationfield, locationTableIndex);
   locationTableIndex += 1;
-  console.log(marker.toGeoJSON()); 
 	localStorage.setItem(locationTableIndex, JSON.stringify(marker.toGeoJSON()));
 	localStorage.setItem('locationCount', locationTableIndex+1);
   localStorage.setItem(('tooltipNumber'+locationTableIndex), locationfield);
-	console.log(localStorage.getItem(locationTableIndex));
-	console.log(localStorage.getItem('locationCount'));
-  console.log(localStorage.getItem('tooltipNumber'+locationTableIndex));
 }
 
 function plotOnClick() {
@@ -200,13 +195,9 @@ function plotOnClick() {
       }).openTooltip();
     }
     mymap.removeEventListener("click");
-  console.log(marker.toGeoJSON());
 	localStorage.setItem(locationTableIndex, JSON.stringify(marker.toGeoJSON()));
 	localStorage.setItem('locationCount', locationTableIndex+1);
   localStorage.setItem(('tooltipNumber'+locationTableIndex), locationfield);
-	console.log(localStorage.getItem(locationTableIndex));
-	console.log(localStorage.getItem('locationCount'));
-  console.log(localStorage.getItem('tooltipNumber'+locationTableIndex));
   });
 }
 
@@ -367,7 +358,7 @@ function startRuler() {
 
 function removeAllLayers() {
   mymap.eachLayer(function(layer) {
-    if (layer._url != currentMapURL) {
+    if (!layer._url) {
       mymap.removeLayer(layer);
     }
   });
