@@ -367,7 +367,7 @@ function startRuler() {
 
 function removeAllLayers() {
   mymap.eachLayer(function(layer) {
-    if (layer._url != currentMapURL) {
+    if (!layer._url) {
       mymap.removeLayer(layer);
     }
   });
